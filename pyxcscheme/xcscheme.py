@@ -87,9 +87,9 @@ class xcscheme(object):
     
     def __repr__(self):
         if self.isValid():
-            return '(%s : %s : %s)' % (self.__class__.__name__, self.name, self.filePath)
+            return '<%s : %s : "%s">' % (self.__class__.__name__, self.name, self.filePath)
         else:
-            return '(%s : INVALID OBJECT)' % (self.__class__.__name__)
+            return '<%s : INVALID OBJECT>' % (self.__class__.__name__)
     
     def __attrs(self):
         return (self.name, self.filePath)

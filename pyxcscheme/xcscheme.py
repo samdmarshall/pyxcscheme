@@ -59,7 +59,7 @@ import TestAction
 class xcscheme(object):
     
     def __init__(self, scheme_type, scheme_path):
-        if scheme_type != 'user' and scheme_type != 'shared':
+        if scheme_type == 'user' or scheme_type == 'shared':
             self.schemeType = scheme_type
             if os.path.exists(scheme_path):
                 self.filePath = scheme_path
@@ -71,12 +71,12 @@ class xcscheme(object):
                     print('Error in reading scheme contents at path "%s"!', self.filePath)
                     raise
                 
-                self.buildAction = BuildAction(self.getAction('BuildAction'))
-                self.testAction = TestAction(self.getAction('TestAction'), self.buildAction)
-                self.launchAction = LaunchAction(self.getAction('LaunchAction'))
-                self.profileAction = ProfileAction(self.getAction('ProfileAction'))
-                self.analyzeAction = AnalyzeAction(self.getAction('AnalyzeAction'), self.buildAction)
-                self.archiveAction = ArchiveAction(self.getAction('ArchiveAction'), self.buildAction)
+                self.buildAction = BuildAction.BuildAction(self.getAction('BuildAction'))
+                self.testAction = TestAction.TestAction(self.getAction('TestAction'), self.buildAction)
+                self.launchAction = LaunchAction.LaunchAction(self.getAction('LaunchAction'))
+                self.profileAction = ProfileAction.ProfileAction(self.getAction('ProfileAction'))
+                self.analyzeAction = AnalyzeAction.AnalyzeAction(self.getAction('AnalyzeAction'), self.buildAction)
+                self.archiveAction = ArchiveAction.ArchiveAction(self.getAction('ArchiveAction'), self.buildAction)
                 
             else:
                 print('Error in loading scheme file at path "%s"!' % self.filePath)
@@ -95,7 +95,7 @@ class xcscheme(object):
         return (self.name, self.filePath)
 
     def __eq__(self, other):
-        return isinstance(other, xcscheme) and self.name == other.name and self.filePath == other.filePath and self.schemeType = other.schemeType
+        return isinstance(other, xcscheme) and self.name == other.name and self.filePath == other.filePath and self.schemeType == other.schemeType
 
     def __hash__(self):
         return hash(self.__attrs())
